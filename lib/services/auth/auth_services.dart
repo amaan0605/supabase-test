@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -32,6 +34,9 @@ class AuthServices {
       final session = response.session;
 
       if (session != null) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('REGISTERED SUCCESFULLY!'),
+        ));
         log('Register successful!');
         log('Access token: ${session.accessToken}');
       } else {
@@ -49,7 +54,6 @@ class AuthServices {
   Future<void> login(
       String email, String password, BuildContext context) async {
     try {
-      print('login called');
       final response = await supabase.auth.signInWithPassword(
         email: email,
         password: password,
@@ -57,8 +61,10 @@ class AuthServices {
       final session = response.session;
 
       if (session != null) {
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => const HomePage()));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('LOGIN SUCCESSFULLY!'),
+        ));
+
         log('Login successful!');
         log('Access token: ${session.accessToken}');
       } else {
